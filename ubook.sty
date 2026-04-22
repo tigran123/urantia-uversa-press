@@ -54,44 +54,6 @@
 \renewcommand*{\LettrineSecondString}{T}
 \setlength{\DefaultNindent}{0pt}
 
-%\RequirePackage[plainpages=false,%
-%                hyperfootnotes=false,%
-%                pdfpagelabels,%
-%                colorlinks,%
-%                linkcolor=black,%
-%                anchorcolor=black,%
-%                citecolor=black,%
-%                filecolor=black,%
-%                menucolor=black,%
-%                pagecolor=black,%
-%                urlcolor=black]{hyperref}
-%
-%\protected\def\bib@raise@anchor#1{%
-%  \ifhmode
-%    \iftrue
-%      \Hy@raisedlink{#1}%
-%    \else
-%      \vadjust pre{%
-%        %\smash{#1}%
-%        \@ovri\dp\strutbox \kern-\@ovri
-%        \setbox\z@\hb@xt@\hsize{#1}%
-%        \ht\z@\z@ \dp\z@\@ovri \box\z@
-%        \kern\z@
-%      }%
-%    \fi
-%  \else#1\fi
-%}
-%
-%\newcommand*{\bibpr}[1]{\hyperlink{#1}{\textlatin{\pageref*{#1}}}}
-%\newcommand*{\bibpdfbookmark}[3][0]{\pdfbookmark[#1]{#2}{#3}}
-%\newcommand*{\rref}[3]{\href{tnk.pdf\##1#2_#3}{#1\nobreakspace#2.#3}}
-%\newcommand*{\lref}[3]{\hyperlink{#1#2_#3}{#1\nobreakspace#2.#3}}
-%\newcommand*{\bibht}{\bib@raise@anchor{\hypertarget{\bkname\thechnum_\curr@vs}{}}\nobreak\hskip\z@skip}
-%\newcommand*{\bibhl}[2]{\hyperlink{#1}{#2}}
-%\newcommand*{\bibpdfdest}[1]{\pdfdest name {#1} fit}
-
-% --- HYPERREF PURGED FOR PRINT EDITION ---
-
 % Print-safe reference macros (no invisible nodes)
 \newcommand*{\bibpr}[1]{\textlatin{\pageref{#1}}}
 \newcommand*{\bibpdfbookmark}[3][0]{} % No-op
@@ -307,52 +269,6 @@
         {\bibfnvssize\curr@vs}.\nobreakspace#1}%
   \fi
 }
-
-% table of contents generation
-%\multicolsep=0pt
-%\columnseprule=0.4pt
-%\def\@pnumwidth{27pt}
-%\def\@tocrmarg{25pt}
-%\AtEndDocument{%
-%  \immediate\write\@mainaux{\string\@writefile{bibtoc}{\string\bibtocfinish}}%
-%  \newwrite\tf@bibtoc
-%  \immediate\openout\tf@bibtoc\jobname.bibtoc
-%}
-%\def\bibpart#1#2#3{%
-%  \bibpdfbookmark{#2}{#3}%
-%  \@writebibtoc{\protect\bibtocline{bibpt}{#1}{#3}}%
-%}
-%\def\@writebibtoc#1{%
-%  \protected@write\@mainaux{}{\string\@writefile{bibtoc}{#1}}%
-%}
-%\def\bibtoc@style@onecol{onecol}
-%\def\bibtoc@style@twocol{twocol}
-%\def\bibtocline#1{\csname l@#1\endcsname}
-%\def\bibtocpgmark#1{\leftline{\hb@xt@\@pnumwidth{\hfil\fontsize{10}{12}\selectfont#1}}}
-%\def\l@bibbk#1#2{\@dottedtocline{1}{0pt}{0pt}{#1}{\bibpr{#2}}}
-%\def\l@bibpt#1#2{%
-%  \ifx\bibtoc@style\bibtoc@style@twocol
-%   \ifnum\col@number>\@ne\end{multicols}\fi
-%  \fi
-%  %\vspace*{\stretch{1}}%
-%  \begin{center}\bibtocheadfont#1\end{center}%
-%  \ifx\bibtoc@style\bibtoc@style@twocol
-%    \@@line{\hss\small\bibpage\hb@xt@\columnsep
-%      {\hss\vrule\@height.7\baselineskip\@depth.7\baselineskip\@width\columnseprule\hss}\hss\small\bibpage}%
-%    \begin{multicols}{2}%
-%    \raggedcolumns
-%  \else
-%    \rightline{\small\bibpage}%
-%  \fi
-%}
-%\def\bibtocfinish{\ifx\bibtoc@style\bibtoc@style@twocol\ifnum\col@number>\@ne\end{multicols}\fi\clearpage\fi}
-%\def\bibtableofcontents#1{%
-%  \def\bibtoc@style{#1}%
-%  \bibpdfbookmark{\bibcontname}{cnt}%
-%  \bibtocfont
-%  \thispagestyle{empty}%
-%  \@input{\jobname.bibtoc}%
-%}
 
 % marks emulation via \write to avoid conflict with marn package
 \def\write@mark#1#2{%

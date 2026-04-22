@@ -163,45 +163,6 @@
 
 \newcommand{\ublistelem}[1]{\kern1.0em\relax\makebox[0.2em][r]{#1}\kern0.1em\relax}
 
-%\newif\ifsecbreak
-%\gdef\secbreaktrue{{\global\let\ifsecbreak\iftrue}}
-%\gdef\secbreakfalse{{\global\let\ifsecbreak\iffalse}}
-%
-%\secbreakfalse
-%
-%\newcommand*{\usectionold}[1]{%
-%\par%
-%\def\secname{#1}%
-%\ifx\secname\ackn\else\end{multicols}\fi%
-%    \ifsecbreak\newpage\secbreakfalse\else\fi%
-%    \fancyhead[CE]{\bibheadfont\authorname}%
-%    \fancyhead[CO]{\bibheadfont\papername}%
-%    \stepcounter{secnum}%
-%    \vspace{3ex}%
-%    {\centering\parbox{\columnwidth}{\mdseries\centering\ifx\secname\ackn\itshape\uppercase{#1}\else\textsc{\sctitlefontsize\thesecnum.\bibnobreakspace #1}\fi}\\}%
-%    \vspace{2ex plus 3ex minus 1ex}%
-%\ifx\secname\ackn\else\begin{multicols}{2}\fi%
-%}
-
-%\newcommand*{\usection}[1]{%
-%\def\secname{#1}%
-%    \end{multicols}%
-%    \fancyhead[CE]{\bibheadfont\authorname}%
-%    \fancyhead[CO]{\bibheadfont\ifnum\value{paper}>0 PAPER\,\thepaper\,--\,\fi\papername}%
-%    \stepcounter{secnum}%
-%       \begin{multicols}{2}[\begin{center}\parbox{\columnwidth}{\mdseries\centering\textsc{\sctitlefontsize\thesecnum.\bibnobreakspace #1}}\end{center}]
-%}
-%
-%\newcommand*{\usectiontwo}[2]{%
-%\def\secname{#2}%
-%    \end{multicols}%
-%    \fancyhead[CE]{\bibheadfont\authorname}%
-%    \fancyhead[CO]{\bibheadfont\papername}%
-%    \stepcounter{secnum}%
-%    \stepcounter{secnum}%
-%       \begin{multicols}{2}[\begin{center}\parbox{\columnwidth}{\mdseries\centering\titlefontsize #1.\bibnobreakspace\textsc{\sctitlefontsize #2}}\end{center}]
-%}
-
 \newcommand*{\usection}[1]{%
 \def\secname{#1}%
     \end{multicols}%
@@ -296,16 +257,6 @@
   \vspace{\dimexpr\baselineskip-\parskip\relax}%
 }
 
-\newcommand{\pcx}{%
-  \ifhmode\par\fi
-  \vspace{\dimexpr2\baselineskip-\parskip\relax}%
-}
-
-
-%\newcommand{\pc}{%
-%  \ifhmode\par\fi                 % ensure vertical mode
-%  \addvspace{\baselineskip}%      % add the extra line of space (suppressed at top)
-%}
 
 %\protected\def\print@vssup#1{\makebox[0.2em][r]{\@textsuperscript{\fontsize{7}{7}\selectfont#1}}\kern0.2em\relax}
 % top-aligned paragraph numbers at cap-height
@@ -333,34 +284,6 @@
     \kern0.05em\relax
   \endgroup
 }
-
-%\protected\def\printvssuper#1{\makebox[0.2em][r]{\@textsuperscript{\fontsize{7}{7}\selectfont#1}}\kern0.05em\relax}
-% size for the in-text footnote mark
-%\newcommand*\fnmarkfont{\fontsize{5}{5}\selectfont}
-% draw a cap-aligned superscript that does NOT affect interline spacing
-%\newdimen\topsup@cap
-%\DeclareRobustCommand{\topsupcap@mark}[1]{%
-%  \begingroup
-%    \setbox0=\hbox{\normalfont\fnmarkfont #1}%
-%    \topsup@cap=\fontcharht\font`H\relax % cap height of the current text font
-%    % only the visual mark (zero reported size):
-%    %\raisebox{\dimexpr\topsup@cap-\ht0\relax}[0pt][0pt]{\smash{\copy0}}%
-%    \raisebox{-7pt}[0pt][0pt]{\smash{\copy0}}%
-%  \endgroup
-%}
-%\AtBeginDocument{%
-%  \renewcommand\@footnotemark{%
-%    \leavevmode
-%    \ifhmode \unskip \edef\@x@sf{\the\spacefactor}\nobreak \fi
-%    % 1) Reserve *normal* line metrics OUTSIDE the link:
-%    \hbox{%
-%      \vrule width0pt height\ht\strutbox depth\dp\strutbox\relax
-%      % 2) Put only the visual mark inside the hyperlink wrapper:
-%      \Hy@raisedlink{\topsupcap@mark{\@thefnmark}}%
-%    }%
-%    \ifhmode \spacefactor\@x@sf \fi
-%  }%
-%}
 
 \newcommand{\authorfont}{\fontsize{10}{10}\bfseries\itshape}%
 \newcommand{\titlesepbig}{{\usefont{U}{webo}{xl}{n}\fontsize{24}{24}\selectfont ahb}}
@@ -418,18 +341,6 @@
   \item\relax}
   {\endlist}
 
-%\AtBeginDocument{%
-%\hypersetup{%
-%  pdftitle={The Urantia Book},%
-%  pdfauthor={Tigran Aivazian <aivazian.tigran@gmail.com>},%
-%  pdfcreator={Bibles.org.uk Typesetting Environment based on TeX Live 2023},%
-%  pdfsubject={The Urantia Papers (\pdftype)},%
-%  pdfkeywords={Earth,Urantia,Truth,History,Religion,Revelation,God,Jesus,Christianity,Bible,Scriptures,Koran,Islam,Judaism,Torah},%
-%  pdflang={English},%
-%  pdfcreationdate={D:20250216162200Z}%
-%}%
-%}
-
 \def\ackn{Acknowledgment}
 \def\papertxt{PAPER}
 \def\parts{The Parts of the Book}
@@ -477,8 +388,6 @@
    \end{center}%
    \vspace*{2ex}%
 }
-
-%\tunemarkuptwo{pguversa}{\def\pcx{\vspace{\baselineskip}}}{\relax}
 
 %\newcommand{\myurl}[1]{\href{#1}{\small\texttt{#1}}}
 \newcommand{\myurl}[1]{{\fontsize{10}{10}\selectfont\texttt{#1}}}
