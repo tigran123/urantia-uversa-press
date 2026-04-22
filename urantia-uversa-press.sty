@@ -1,0 +1,578 @@
+\NeedsTeXFormat{LaTeX2e}[2000/06/01]
+\ProvidesPackage{urantia-uversa-press}[2025/02/10 v1.0]
+
+% conditional markup tuning, to maintain more than 1 version of module sources with hand-tuned markup
+\def\tunemarkuptag#1{\@namedef{tune@markup@#1}{}}
+\def\tunemarkup#1#2{\@ifundefined{tune@markup@#1}{}{#2}}
+\def\tunemarkuptwo#1#2#3{\@ifundefined{tune@markup@#1}{#3}{#2}}
+
+% various page sizes
+\tunemarkuptag{pguversa}
+
+\RequirePackage[figure,curq,nfnst]{totalcount}
+\RequirePackage[\tunemarkup{pguversa}{doublecol,}parvs]{ubook}
+
+\RequirePackage{quoting,hanging,qrcode,array,graphicx}
+\quotingsetup{vskip=0pt,leftmargin=1em,rightmargin=0pt}
+
+% various font families
+%\tunemarkuptag{garamond}
+%\tunemarkuptag{goudy}
+\tunemarkuptag{oflgoudy}
+
+% comment out to enable footnotes
+%\tunemarkuptag{nofnt}
+
+\setdefaultlanguage{english}
+
+\def\urantiaparttitlefont{GoudyHandtooled BT}
+
+\tunemarkup{garamond}{%
+\def\urantiasctitlefont{Garamond Premier Pro Medium Caption}
+\def\urantiamdheadingfont{Garamond Premier Pro Medium Caption}
+\def\urantiaheadingfont{Garamond Premier Pro Semibold Caption}
+\def\urantiamainfont{Garamond Premier Pro}
+\def\urantiatitlefont{Garamond Premier Pro Semibold Display}
+\renewcommand{\bibheadfont}{\headingfont\fontsize{7.7}{7.7}\selectfont}
+}
+
+\tunemarkup{oflgoudy}{%
+\def\urantiasctitlefont{OFL Sorts Mill Goudy}
+\def\urantiamdheadingfont{OFL Sorts Mill Goudy}
+\def\urantiaheadingfont{OFL Sorts Mill Goudy}
+\def\urantiamainfont{OFL Sorts Mill Goudy}
+\def\urantiatitlefont{OFL Sorts Mill Goudy}
+\renewcommand{\bibheadfont}{\headingfont\fontsize{7.7}{7.7}\selectfont}
+}
+
+\tunemarkup{goudy}{%
+\def\urantiasctitlefont{Goudy Old Style}
+\def\urantiamdheadingfont{Goudy Old Style}
+\def\urantiaheadingfont{Goudy Old Style}
+\def\urantiamainfont{Goudy Old Style}
+\def\urantiatitlefont{Goudy Old Style}
+\renewcommand{\bibheadfont}{\headingfont\fontsize{7.7}{7.7}\selectfont}
+}
+
+% Printed Uversa Press edition
+\RequirePackage[dvips,headheight=18pt,headsep=10pt,vmargin={0.68in,0.38in},hmargin={0.625in,0.4375in},twoside=true,papersize={468bp,648bp}]{geometry}
+
+% allow inter-paragraph space to grow
+%\setlength{\parskip}{1pt plus 1pt minus 0.5pt}
+\setlength{\parskip}{0pt}
+
+%\setmainfont[WordSpace={1.0,1.6,1.0},Mapping=tex-text]{\urantiamainfont}
+\setmainfont[Numbers=Lining,Mapping=tex-text]{\urantiamainfont}
+\newfontfamily\titlefont[Letters=Uppercase,LetterSpace=3.0,WordSpace=1.3,Mapping=tex-text]{\urantiatitlefont}
+\newfontfamily\parttitlefont[Letters=Uppercase,LetterSpace=3.0,WordSpace=2.0,Mapping=tex-text]{\urantiaparttitlefont}
+\newfontfamily\tocparttitlefont[Letters=Uppercase,LetterSpace=2.0,WordSpace=1.0,Mapping=tex-text]{\urantiaparttitlefont}
+\newfontfamily\mdheadingfont[Numbers=Lining,LetterSpace=1.2,WordSpace=1.2,Mapping=tex-text]{\urantiamdheadingfont}
+\newfontfamily\sctitlefont[SmallCapsFeatures={Letters=SmallCaps},RawFeature=+smcp,Letters=SmallCaps,Numbers=Lining,Mapping=tex-text]{\urantiasctitlefont}
+\newfontfamily\headingfont[Numbers=Lining,LetterSpace=1.2,WordSpace=1.2,Mapping=tex-text]{\urantiaheadingfont}
+
+\newfontfamily\libertinefont[Mapping=tex-text]{Linux Libertine O}
+%\newcommand{\tux}{{\libertinefont ^^^^e000}}
+
+\newcounter{paper}
+\newcounter{secnum}
+
+\fancyhead{}
+\fancyfoot{}
+\fancyhead[LE,RO]{\bibheadfont\vs@range}
+\fancyhead[RE,LO]{\bibheadfont\bibheadpagesize\thepage}
+
+\renewcommand{\author}[1]{%
+\gdef\authorname{\MakeUppercase{#1}}%
+\fancyhead[CE]{\bibheadfont\authorname}%
+}
+
+\newcommand{\upartheader}[1]{%
+   \par\vspace{3ex}\pagebreak[3]%
+   {
+   \titlefont\bibtocheadfont
+    \ifnum #1=1
+       \partitxt.~\partitoc
+    \fi
+    \ifnum #1=2
+       \partiitxt.~\partiitoc
+    \fi
+    \ifnum #1=3
+       \partiiitxt.~\partiiitoc
+    \fi
+    \ifnum #1=4
+       \partivtxt.~\partivtoc
+    \fi
+   }\vspace{2ex}%
+}
+
+\newcommand{\upapertitleheader}[3]{%
+   \mbox{%
+     \headingfont
+     \makebox[0.62\linewidth][c]{\textsc{#1}}%
+     \makebox[0.30\linewidth][c]{\textsc{#2}}%
+     \makebox[0.04\linewidth][l]{\textsc{#3}}%
+  }%
+}
+
+\newcommand{\utocheader}[3]{%
+   \mbox{%
+     \headingfont
+     \makebox[0.64\linewidth][l]{\textsc{#1}}%
+     \makebox[0.30\linewidth][l]{\textsc{#2}}%
+     \makebox[0.06\linewidth][r]{\textsc{#3}}%
+  }\\[1ex]%
+}
+
+\newcounter{utocpapernum}
+\newcounter{utocsecnum}
+\setcounter{utocpapernum}{-1}
+
+\newcommand{\utocpaper}[4]{%
+   {
+     \stepcounter{utocpapernum}
+     \setcounter{utocsecnum}{0}
+     \utocpaperfontsize
+     \makebox[0.05\linewidth][l]{#1. }%
+     \makebox[0.587\linewidth][l]{\textsc{#2}\bibdf}%
+     \makebox[0.30\linewidth][l]{#3\bibdf}%
+     \makebox[0.063\linewidth][r]{\bibpr{#4}}%
+   }
+   \input tex/p#1-sections.tex
+}
+
+\newcommand{\utocsection}[1]{%
+   \stepcounter{utocsecnum}%
+   {
+    \utocsectionfontsize
+    \makebox[0.08\linewidth][r]{\theutocsecnum.\space\space\space}
+    \makebox[0.85\linewidth][l]{#1\bibdf}
+    \makebox[0.06\linewidth][r]{\bibpr{p\theutocpapernum_\theutocsecnum}}\\
+   }%
+}
+
+\newcommand{\upapertitle}[4]{%
+   {
+     \pagebreak[3]%
+     \mdheadingfont
+     \makebox[0.05\linewidth][r]{#1. }%
+     \makebox[0.57\linewidth][l]{#2\bibdf}%
+     \makebox[0.29\linewidth][l]{#3\bibdf}%
+     \makebox[0.07\linewidth][r]{\bibpr{#4}}%
+   }\vspace{0.6ex}\linebreak
+}
+
+\newcommand{\ublistelem}[1]{\kern1.0em\relax\makebox[0.2em][r]{#1}\kern0.1em\relax}
+
+%\newif\ifsecbreak
+%\gdef\secbreaktrue{{\global\let\ifsecbreak\iftrue}}
+%\gdef\secbreakfalse{{\global\let\ifsecbreak\iffalse}}
+%
+%\secbreakfalse
+%
+%\newcommand*{\usectionold}[1]{%
+%\par%
+%\def\secname{#1}%
+%\ifx\secname\ackn\else\end{multicols}\fi%
+%    \ifsecbreak\newpage\secbreakfalse\else\fi%
+%    \fancyhead[CE]{\bibheadfont\authorname}%
+%    \fancyhead[CO]{\bibheadfont\papername}%
+%    \stepcounter{secnum}%
+%    \vspace{3ex}%
+%    {\centering\parbox{\columnwidth}{\mdseries\centering\ifx\secname\ackn\itshape\uppercase{#1}\else\textsc{\sctitlefontsize\thesecnum.\bibnobreakspace #1}\fi}\\}%
+%    \vspace{2ex plus 3ex minus 1ex}%
+%\ifx\secname\ackn\else\begin{multicols}{2}\fi%
+%}
+
+%\newcommand*{\usection}[1]{%
+%\def\secname{#1}%
+%    \end{multicols}%
+%    \fancyhead[CE]{\bibheadfont\authorname}%
+%    \fancyhead[CO]{\bibheadfont\ifnum\value{paper}>0 PAPER\,\thepaper\,--\,\fi\papername}%
+%    \stepcounter{secnum}%
+%       \begin{multicols}{2}[\begin{center}\parbox{\columnwidth}{\mdseries\centering\textsc{\sctitlefontsize\thesecnum.\bibnobreakspace #1}}\end{center}]
+%}
+%
+%\newcommand*{\usectiontwo}[2]{%
+%\def\secname{#2}%
+%    \end{multicols}%
+%    \fancyhead[CE]{\bibheadfont\authorname}%
+%    \fancyhead[CO]{\bibheadfont\papername}%
+%    \stepcounter{secnum}%
+%    \stepcounter{secnum}%
+%       \begin{multicols}{2}[\begin{center}\parbox{\columnwidth}{\mdseries\centering\titlefontsize #1.\bibnobreakspace\textsc{\sctitlefontsize #2}}\end{center}]
+%}
+
+\newcommand*{\usection}[1]{%
+\def\secname{#1}%
+    \end{multicols}%
+    \fancyhead[CE]{\bibheadfont\authorname}%
+    \fancyhead[CO]{\bibheadfont\ifnum\value{paper}>0 PAPER\,\thepaper\,--\,\fi\papername}%
+    \stepcounter{secnum}%
+       \begin{multicols}{2}[\begin{center}\parbox{\columnwidth}{\mdseries\centering\textsc{\sctitlefontsize\thesecnum.\bibnobreakspace #1}}\end{center}][5\baselineskip]
+}
+
+\newcommand*{\usectiontwo}[2]{%
+\def\secname{#2}%
+    \end{multicols}%
+    \fancyhead[CE]{\bibheadfont\authorname}%
+    \fancyhead[CO]{\bibheadfont\papername}%
+    \stepcounter{secnum}%
+    \stepcounter{secnum}%
+       \begin{multicols}{2}[\begin{center}\parbox{\columnwidth}{\mdseries\centering\titlefontsize #1.\bibnobreakspace\textsc{\sctitlefontsize #2}}\end{center}][5\baselineskip]
+}
+
+\def\bibnobreakspace{\kern5pt\relax}
+\newcommand{\separatorline}{\begin{center}*\ \ *\ \ *\ \ *\ \ *\end{center}}
+\newcommand{\separatorshort}{\begin{center}*\ *\ *\end{center}}
+
+\newcommand{\bibtextul}[1]{\emph{#1}}
+\newcommand{\bibexpl}[1]{#1}
+\providecommand{\textlatin}[1]{{#1}}
+\renewcommand{\headrulewidth}{0.3pt}
+\columnseprule=0.0pt
+
+\def\mytoday{{\ddmmyyyydate\today}}
+\def\bibchap{\printvssup{\curr@vs}}
+
+\def\vs@range{%
+  \@ifundefined{mark@vs@\thepage}{}{%
+    \thepaper:\expandafter\expandafter\expandafter
+      \vs@range@a\csname mark@vs@\thepage\endcsname
+  }%
+}
+
+\input tex/urantia-hyphen-en.tex
+
+\setlength{\columnsep}{3.5mm}
+\setlength\parindent{8\p@}
+\let\textcolour\textcolor
+
+\newcounter{nfnst}
+\newcounter{paperqcount}
+\newcounter{curq}
+\newcounter{cans}
+
+\newcommand{\hsetoff}{\hspace*{0.6em}}
+\newlength{\vstotal}
+\setlength{\vstotal}{0.9em}
+\newlength{\vskern}
+\setlength{\vskern}{0.4em}
+\protected\def\print@vssup#1{\makebox[\vstotal][l]{\@textsuperscript{\fontsize{7}{7}\bfseries#1}}\kern\vskern\relax}
+
+\tunemarkuptwo{nofnt}{%
+ \def\fnst#1{}
+ \def\fnc#1{}
+}{%
+ \def\fnst#1{\stepcounter{nfnst}\footnote{#1}}
+ \def\fnc#1{\stepcounter{nfnst}\footnote{#1}}
+}
+
+% for TOC entries horizontal spacing
+\newcommand{\numw}{0.08\linewidth}
+\newcommand{\txtw}{0.81\linewidth}
+\newcommand{\vsmark}[2]{\write@mark{vs}{{#1}{#2}}}
+
+\newcommand{\pdftype}{Uversa Press B\&W}
+\newcommand{\sctitlefontsize}{\sctitlefont\fontsize{13}{15}\selectfont}
+\newcommand{\titlefontsize}{\fontsize{13}{15}\selectfont}
+\newcommand{\booktitlefontsize}{\titlefont\fontsize{32}{40}\bfseries}
+\newcommand{\offontsize}{\fontsize{24}{34}\selectfont}
+\newcommand{\subsubtitlefontsize}{\fontsize{20}{25}\itshape}
+\newcommand{\introfontsize}{\fontsize{16}{19}\selectfont}
+\newcommand{\infofontsize}{\large\itshape}
+\def\phoenixscale{0.15}
+
+\tolerance=400
+\multicoltolerance=1700
+%\doublehyphendemerits=2000000000
+\doublehyphendemerits=500000000
+\widowpenalty=0
+\clubpenalty=0
+\displaywidowpenalty=0
+\brokenpenalty=0
+
+\newcommand{\pc}{%
+  \ifhmode\par\fi
+  \vspace{\dimexpr\baselineskip-\parskip\relax}%
+}
+
+\newcommand{\pcx}{%
+  \ifhmode\par\fi
+  \vspace{\dimexpr2\baselineskip-\parskip\relax}%
+}
+
+
+%\newcommand{\pc}{%
+%  \ifhmode\par\fi                 % ensure vertical mode
+%  \addvspace{\baselineskip}%      % add the extra line of space (suppressed at top)
+%}
+
+%\protected\def\print@vssup#1{\makebox[0.2em][r]{\@textsuperscript{\fontsize{7}{7}\selectfont#1}}\kern0.2em\relax}
+% top-aligned paragraph numbers at cap-height
+\protected\def\print@vssup#1{%
+  \begingroup
+    % typeset and measure the small numeral
+    \sbox0{\fontsize{6}{6}\selectfont #1}%
+    % cap height of current text font (use H as a robust proxy)
+    \dimen@=\fontcharht\font`H\relax
+    \makebox[0.2em][r]{%
+      \raisebox{\dimexpr\dimen@-\ht0\relax}[\dimen@][0pt]{\copy0}%
+    }%
+    \kern0.2em\relax
+  \endgroup
+}
+\protected\def\printvssuper#1{%
+  \begingroup
+    % typeset and measure the small numeral
+    \sbox0{\fontsize{6}{6}\selectfont #1}%
+    % cap height of current text font (use H as a robust proxy)
+    \dimen@=\fontcharht\font`H\relax
+    \makebox[0.2em][r]{%
+      \raisebox{\dimexpr\dimen@-\ht0\relax}[\dimen@][0pt]{\copy0}%
+    }%
+    \kern0.05em\relax
+  \endgroup
+}
+
+%\protected\def\printvssuper#1{\makebox[0.2em][r]{\@textsuperscript{\fontsize{7}{7}\selectfont#1}}\kern0.05em\relax}
+% size for the in-text footnote mark
+%\newcommand*\fnmarkfont{\fontsize{5}{5}\selectfont}
+% draw a cap-aligned superscript that does NOT affect interline spacing
+%\newdimen\topsup@cap
+%\DeclareRobustCommand{\topsupcap@mark}[1]{%
+%  \begingroup
+%    \setbox0=\hbox{\normalfont\fnmarkfont #1}%
+%    \topsup@cap=\fontcharht\font`H\relax % cap height of the current text font
+%    % only the visual mark (zero reported size):
+%    %\raisebox{\dimexpr\topsup@cap-\ht0\relax}[0pt][0pt]{\smash{\copy0}}%
+%    \raisebox{-7pt}[0pt][0pt]{\smash{\copy0}}%
+%  \endgroup
+%}
+%\AtBeginDocument{%
+%  \renewcommand\@footnotemark{%
+%    \leavevmode
+%    \ifhmode \unskip \edef\@x@sf{\the\spacefactor}\nobreak \fi
+%    % 1) Reserve *normal* line metrics OUTSIDE the link:
+%    \hbox{%
+%      \vrule width0pt height\ht\strutbox depth\dp\strutbox\relax
+%      % 2) Put only the visual mark inside the hyperlink wrapper:
+%      \Hy@raisedlink{\topsupcap@mark{\@thefnmark}}%
+%    }%
+%    \ifhmode \spacefactor\@x@sf \fi
+%  }%
+%}
+
+\newcommand{\authorfont}{\fontsize{10}{10}\bfseries\itshape}%
+\newcommand{\titlesepbig}{{\usefont{U}{webo}{xl}{n}\fontsize{24}{24}\selectfont ahb}}
+\newcommand{\bibtocsuperheadfont}{\fontsize{19}{19}\selectfont}
+\renewcommand{\bibtocheadfont}{\fontsize{13}{13}\mdseries}
+\renewcommand{\bibtocfont}{\fontsize{9.3}{12}\selectfont}
+\newcommand{\subfont}{\fontsize{13}{20}\itshape}
+\newcommand{\subtitlefont}{\Large}
+\newcommand{\utocpaperfontsize}{\mdheadingfont\fontsize{9.5}{9.5}\selectfont}
+\newcommand{\utocsectionfontsize}{\mdheadingfont\fontsize{10}{12}\selectfont}
+\newcommand{\parttitlefontsize}{\parttitlefont\fontsize{24}{24}\selectfont}
+\newcommand{\partheaderfontsize}{\titlefont\fontsize{17}{17}\scshape}
+\newcommand{\parttextfontsize}{\titlefont\fontsize{28}{30}\selectfont}
+\renewcommand{\footnotesize}{\fontsize{9}{10.5}\selectfont}
+
+\newcommand{\bibbookend}{\fontsize{10}{11.2}\selectfont}
+\newcommand{\urantiamainfontsize}{10/11.2pt}
+
+% make the current paragraph one line longer or shorter by varying inter-word spacing
+\def\plusone{\looseness=1}
+\def\minusone{\looseness=-1}
+
+\newcommand{\bibpaperfont}{\titlefont\fontsize{12}{19}\selectfont}
+\newcommand{\bibpapertitlefont}{\titlefont\fontsize{13}{19}\bfseries}
+\newcommand{\minitocfontsize}{\headingfont\fontsize{15}{19}\selectfont}
+\renewcommand{\bibheadfont}{\headingfont\fontsize{8}{8}\selectfont}
+\newcommand{\bibheadpapersize}{\fontsize{9}{9}\selectfont}
+\renewcommand{\bibheadchapsize}{\fontsize{8}{8}\selectfont}
+\renewcommand{\bibheadversesize}{\fontsize{7}{7}\selectfont}
+\renewcommand{\bibheadpagesize}{\fontsize{8}{8}\selectfont}
+
+\newcommand{\vsetoff}{\vspace*{\baselineskip}}%
+
+\newlength{\ubwrappedmargin}
+\newlength{\ubpullback}
+
+% 1. Set the total left margin (The absolute X-coordinate for wrapped text)
+% Adjust this so the word "Spirits" aligns perfectly under the "T" in the line above.
+\setlength{\ubwrappedmargin}{3.8em} 
+
+% 2. Set the pullback (The delta \Delta x for your custom macros)
+% This width must equal the visual footprint of \vs + \ublistelem + \bibnobreakspace
+\setlength{\ubpullback}{2em} 
+
+\newenvironment{ubquote}
+  {\list{}{%
+    \setlength{\leftmargin}{\ubwrappedmargin}%        The wall for wrapped text
+    \setlength{\rightmargin}{1.5em}%
+    \setlength{\itemindent}{-\ubpullback}%            Pulls the first line back
+    \setlength{\listparindent}{-\ubpullback}%         Pulls subsequent first lines back inside the block
+    \setlength{\parsep}{0pt}%
+    \setlength{\itemsep}{0pt}%
+    \setlength{\topsep}{1pt}%
+  }%
+  \item\relax}
+  {\endlist}
+
+%\AtBeginDocument{%
+%\hypersetup{%
+%  pdftitle={The Urantia Book},%
+%  pdfauthor={Tigran Aivazian <aivazian.tigran@gmail.com>},%
+%  pdfcreator={Bibles.org.uk Typesetting Environment based on TeX Live 2023},%
+%  pdfsubject={The Urantia Papers (\pdftype)},%
+%  pdfkeywords={Earth,Urantia,Truth,History,Religion,Revelation,God,Jesus,Christianity,Bible,Scriptures,Koran,Islam,Judaism,Torah},%
+%  pdflang={English},%
+%  pdfcreationdate={D:20250216162200Z}%
+%}%
+%}
+
+\def\ackn{Acknowledgment}
+\def\papertxt{PAPER}
+\def\parts{The Parts of the Book}
+\def\partitxt{PART I}
+\def\partitoc{THE CENTRAL AND SUPERUNIVERSES}
+\def\partiup{The Central\\and Superuniverses}
+\def\partimix{The Central and Superuniverses}
+\def\partisub{Sponsored by a Uversa Corps of superuniverse personalities\\acting by authority of the Orvonton\\Ancients of Days.}
+\def\partiitxt{PART II}
+\def\partiitoc{THE LOCAL UNIVERSE}
+\def\partiiup{The Local Universe}
+\def\partiimix{The Local Universe}
+\def\partiisub{Sponsored by a Nebadon Corps of local universe\\personalities acting by authority of\\Gabriel of Salvington.}
+\def\partiiitxt{PART III}
+\def\partiiitoc{THE HISTORY OF URANTIA}
+\def\partiiiup{The History of Urantia}
+\def\partiiimix{The History of Urantia}
+\def\partiiisub{These papers were sponsored by a corps of local universe\\personalities acting by authority of\\Gabriel of Salvington.}
+\def\partivtxt{PART IV}
+\def\partivtoc{THE LIFE AND TEACHINGS OF JESUS}
+\def\partivup{The Life and\\Teachings of Jesus}
+\def\partivmix{The Life and Teachings of Jesus}
+\def\partivsub{This group of papers was sponsored by a commission of twelve\\Urantia midwayers acting under the supervision of a Melchizedek\\revelatory director. The basis of this narrative was supplied\\by a secondary midwayer who was onetime assigned to\\the superhuman watchcare of the Apostle Andrew.}
+
+\newcommand{\bibpaperdisplay}[2]{%
+   \begin{center}%
+   \ifnum #1=1
+       \titlefont\partheaderfontsize\partitxt\\[2ex]
+       \parttextfontsize\partiup\\[3ex]
+   \fi
+   \ifnum #1=32
+       \titlefont\partheaderfontsize\partiitxt\\[2ex]
+       \parttextfontsize\partiiup\\[3ex]
+   \fi
+   \ifnum #1=57
+       \titlefont\partheaderfontsize\partiiitxt\\[2ex]
+       \parttextfontsize\partiiiup\\[3ex]
+   \fi
+   \ifnum #1=120
+       \titlefont\partheaderfontsize\partivtxt\\[2ex]
+       \parttextfontsize\partivup\\[3ex]
+   \fi
+   \ifnum #1>0\bibpaperfont\uppercase{\papertxt}\nobreakspace#1\\[1ex]\fi
+   \bibpapertitlefont\uppercase{#2}\\%
+   \end{center}%
+   \vspace*{2ex}%
+}
+
+%\tunemarkuptwo{pguversa}{\def\pcx{\vspace{\baselineskip}}}{\relax}
+
+%\newcommand{\myurl}[1]{\href{#1}{\small\texttt{#1}}}
+\newcommand{\myurl}[1]{{\fontsize{10}{10}\selectfont\texttt{#1}}}
+
+\newcommand{\myurlqr}[3]{%
+  \noindent
+  \begin{minipage}[c]{0.8\textwidth}
+    {\small#2}\\
+    \myurl{#1}
+  \end{minipage}%
+  \hfill
+  \begin{minipage}[c]{0.2\textwidth}
+    \raggedleft
+    \includegraphics[width=2.2cm]{#3}
+  \end{minipage}
+}
+
+
+\newcommand{\upaper}[2]{%
+\newpage\thispagestyle{empty}\vspace*{\stretch{0.1}}%
+\gdef\papername{\MakeUppercase{#2}}%
+\setcounter{paper}{#1}%
+\setcounter{secnum}{0}%
+\bibpaperdisplay{#1}{#2}%
+ \ubookdescr{p#1}{
+%   toc={\makebox[\numw][r]{#1.\,}\makebox[\txtw][l]{#2\bibdf}},
+%   bookmark={#1. #2},
+   header={#2},
+   abbr={p#1}
+}%
+\fancyhead[CO]{\bibheadfont\MakeUppercase{#2}}%
+}
+
+\newcommand{\parti}{%
+  \tunemarkuptwo{pguversa}{\clp}{\newpage}
+  \thispagestyle{empty}%
+  \vspace*{\stretch{0.1}}%
+  \begin{center}%
+  {%
+    \parttitlefontsize
+    \partitxt\\[1ex]
+    \partiup\\[2ex]
+  }%
+  \subfont\partisub\\%
+  \vspace*{\stretch{0.5}}%
+  \end{center}%
+  \tunemarkuptwo{pguversa}{\clp}{\newpage}
+}
+
+\newcommand{\partii}{%
+  \tunemarkuptwo{pguversa}{\clp}{\newpage}
+  \thispagestyle{empty}%
+  \vspace*{\stretch{0.1}}%
+  \begin{center}%
+  {%
+    \parttitlefontsize
+    \partiitxt\\[1ex]
+    \partiiup\\[2ex]
+  }%
+  \subfont\partiisub\\
+  \end{center}%
+  \vspace*{\stretch{0.5}}%
+  \tunemarkuptwo{pguversa}{\clp}{\newpage}
+}
+
+\newcommand{\partiii}{%
+  \tunemarkuptwo{pguversa}{\clp}{\newpage}
+  \thispagestyle{empty}%
+  \vspace*{\stretch{0.1}}%
+  \begin{center}%
+  {%
+    \parttitlefontsize
+    \partiiitxt\\[1ex]
+    \partiiiup\\[2ex]
+  }%
+  \subfont\partiiisub\\
+  \end{center}%
+  \vspace*{\stretch{0.5}}%
+  \tunemarkuptwo{pguversa}{\clp}{\newpage}
+}
+
+\newcommand{\partiv}{%
+  \tunemarkuptwo{pguversa}{\clp}{\newpage}
+  \thispagestyle{empty}%
+  \vspace*{\stretch{0.1}}%
+  \begin{center}%
+  {%
+    \parttitlefontsize
+    \partivtxt\\[1ex]
+    \partivup\\[2ex]
+  }%
+  \subfont
+  \partivsub\\%
+  \vspace*{\stretch{0.5}}%
+  \end{center}%
+  \tunemarkuptwo{pguversa}{\clp}{\newpage}
+}
