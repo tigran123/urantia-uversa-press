@@ -61,17 +61,15 @@
 %\setlength{\parskip}{1pt plus 1pt minus 0.5pt}
 \setlength{\parskip}{0pt}
 
-%\setmainfont[WordSpace={1.0,1.6,1.0},Mapping=tex-text]{\urantiamainfont}
-\setmainfont[Numbers=Lining,Mapping=tex-text]{\urantiamainfont}
-\newfontfamily\titlefont[Letters=Uppercase,LetterSpace=3.0,WordSpace=1.3,Mapping=tex-text]{\urantiatitlefont}
-\newfontfamily\parttitlefont[Letters=Uppercase,LetterSpace=3.0,WordSpace=2.0,Mapping=tex-text]{\urantiaparttitlefont}
-\newfontfamily\tocparttitlefont[Letters=Uppercase,LetterSpace=2.0,WordSpace=1.0,Mapping=tex-text]{\urantiaparttitlefont}
-\newfontfamily\mdheadingfont[Numbers=Lining,LetterSpace=1.2,WordSpace=1.2,Mapping=tex-text]{\urantiamdheadingfont}
-\newfontfamily\sctitlefont[SmallCapsFeatures={Letters=SmallCaps},RawFeature=+smcp,Letters=SmallCaps,Numbers=Lining,Mapping=tex-text]{\urantiasctitlefont}
-\newfontfamily\headingfont[Numbers=Lining,LetterSpace=1.2,WordSpace=1.2,Mapping=tex-text]{\urantiaheadingfont}
+\setmainfont[Path=fonts/,Extension=.otf,UprightFont=OFLGoudyStM,ItalicFont=OFLGoudyStM-Italic,Numbers=Lining,Mapping=tex-text]{\urantiamainfont}
+\newfontfamily\titlefont[Path=fonts/,Extension=.otf,UprightFont=OFLGoudyStM,ItalicFont=OFLGoudyStM-Italic,Letters=Uppercase,LetterSpace=3.0,WordSpace=1.3,Mapping=tex-text]{\urantiatitlefont}
+\newfontfamily\parttitlefont[Path=fonts/,Extension=.otf,UprightFont=OFLGoudyStM,ItalicFont=OFLGoudyStM-Italic,Letters=Uppercase,LetterSpace=3.0,WordSpace=2.0,Mapping=tex-text]{\urantiaparttitlefont}
+\newfontfamily\tocparttitlefont[Path=fonts/,Extension=.otf,UprightFont=OFLGoudyStM,ItalicFont=OFLGoudyStM-Italic,Letters=Uppercase,LetterSpace=2.0,WordSpace=1.0,Mapping=tex-text]{\urantiaparttitlefont}
+\newfontfamily\mdheadingfont[Path=fonts/,Extension=.otf,UprightFont=OFLGoudyStM,ItalicFont=OFLGoudyStM-Italic,Numbers=Lining,LetterSpace=1.2,WordSpace=1.2,Mapping=tex-text]{\urantiamdheadingfont}
+\newfontfamily\sctitlefont[Path=fonts/,Extension=.otf,UprightFont=OFLGoudyStM,ItalicFont=OFLGoudyStM-Italic,SmallCapsFeatures={Letters=SmallCaps},RawFeature=+smcp,Letters=SmallCaps,Numbers=Lining,Mapping=tex-text]{\urantiasctitlefont}
+\newfontfamily\headingfont[Path=fonts/,Extension=.otf,UprightFont=OFLGoudyStM,ItalicFont=OFLGoudyStM-Italic,Numbers=Lining,LetterSpace=1.2,WordSpace=1.2,Mapping=tex-text]{\urantiaheadingfont}
 
-\newfontfamily\libertinefont[Mapping=tex-text]{Linux Libertine O}
-%\newcommand{\tux}{{\libertinefont ^^^^e000}}
+\newcommand{\textsm}{\raisebox{0.8ex}{\fontsize{3}{3}\selectfont SM}}
 
 \newcounter{paper}
 \newcounter{secnum}
