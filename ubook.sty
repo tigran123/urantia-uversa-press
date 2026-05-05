@@ -249,27 +249,6 @@
     {\bibbookattr{#1}{bookmark}}%
     {#1}[\bibbookattr{#1}{toc}]}
 
-
-\newwrite\tf@fn@chk
-\immediate\openout\tf@fn@chk\jobname.fnchk
-\newcounter{fn@seq}
-\protected\def\fn@chk@a{\stepcounter{fn@seq}\protected@write\tf@fn@chk{}{a \thefn@seq\space\thepage}}
-\protected\def\fn@chk@b{\protected@write\tf@fn@chk{}{b \thefn@seq\space\thepage}}
-\protected\def\bib@footnote#1{\fn@chk@a\footnote{\fn@chk@b #1}}
-\protected\def\bib@footnotetext#1{\fn@chk@a\footnotetext{\fn@chk@b #1}}
-
-\def\fn#1{%
-  \leavevmode\unskip
-  \stepcounter{nnotes}\ts{*}%
-  \ifnum\c@nnotes=1 % first note in this chapter
-      \bib@footnotetext{%
-        {\bibfnchapsize\thechnum.}{\bibfnvssize\curr@vs}.\nobreakspace#1}%
-  \else
-      \bib@footnotetext{%
-        {\bibfnvssize\curr@vs}.\nobreakspace#1}%
-  \fi
-}
-
 % marks emulation via \write to avoid conflict with marn package
 \def\write@mark#1#2{%
   \@ifundefined{c@mark@serial@#1}{\newcounter{mark@serial@#1}}{}%

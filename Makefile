@@ -14,7 +14,6 @@ $(MOD).pdf:	select-book.tex
 ifndef DRAFT
 		$(LATEX)
 		$(LATEX)
-		@if test -s $(MOD).fnchk; then perl bin/fnchk.pl < $(MOD).fnchk; fi
 endif
 
 select-book.tex:	
