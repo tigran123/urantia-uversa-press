@@ -45,7 +45,7 @@ def analyze_bbox(html_file):
                 w1 = words_sorted[j]
                 w2 = words_sorted[j+1]
                 gap = w2['xMin'] - w1['xMax']
-                if gap > 5 and w1['xMax'] < 240 and w2['xMin'] > 225:
+                if gap > 8 and w1['xMax'] < 240 and w2['xMin'] > 225:
                     gap_crosses_middle = True
             
             crosses_middle = (line_xMin < 220 and line_xMax > 260)
