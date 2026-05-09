@@ -104,11 +104,13 @@ def analyze_bbox(html_file):
         left_last_y = left_valid[-1][0]
         right_last_y = right_valid[-1][0]
         
-        if abs(left_last_y - right_last_y) > 10:
+        if abs(left_last_y - right_last_y) > 5:
             count += 1
             print(f"Page {last_page}: UNBALANCED (Diff: {abs(left_last_y - right_last_y)})")
             print(f"  Left ends at y={left_last_y}: {left_valid[-1][1]}")
             print(f"  Right ends at y={right_last_y}: {right_valid[-1][1]}")
+        elif left_last_y > 625 or right_last_y > 625:
+            print(f"Page {last_page}: WARNING - Text extends into bottom margin (Left: {left_last_y}, Right: {right_last_y})")
 
     print(f"Total unbalanced columns found: {count}")
 
