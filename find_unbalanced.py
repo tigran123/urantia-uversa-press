@@ -29,7 +29,7 @@ def analyze_bbox(html_file):
                                 'yMax': float(word.get('yMax'))
                             })
                             
-        valid_y = [y for y in y_lines.keys() if 50 < y < 630]
+        valid_y = [y for y in y_lines.keys() if 50 < y < 660]
         valid_y.sort()
         
         for y in valid_y:

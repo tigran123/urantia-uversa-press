@@ -49,7 +49,7 @@ def find_orphans(html_file):
                     'xMax': float(word.get('xMax')),
                 })
 
-        valid_y = sorted(y for y in y_lines.keys() if 50 < y < 630)
+        valid_y = sorted(y for y in y_lines.keys() if 50 < y < 660)
 
         left_col = []   # (y, xMin, xMax, text)
         right_col = []
