@@ -54,8 +54,8 @@ def analyze_bbox(html_file):
             if is_title:
                 events.append({'type': 'title'})
             else:
-                left_w = [w for w in words if w['xMin'] < 228]
-                right_w = [w for w in words if w['xMin'] > 228]
+                left_w = [w for w in words if w['xMin'] < 231]
+                right_w = [w for w in words if w['xMin'] > 231]
                 
                 left_text = " ".join(w['text'] for w in sorted(left_w, key=lambda x: x['xMin'])) if left_w else ""
                 right_text = " ".join(w['text'] for w in sorted(right_w, key=lambda x: x['xMin'])) if right_w else ""

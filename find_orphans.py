@@ -73,8 +73,8 @@ def find_orphans(html_file):
             if is_title:
                 continue
 
-            left_w = [w for w in words if w['xMin'] < 228]
-            right_w = [w for w in words if w['xMin'] > 228]
+            left_w = [w for w in words if w['xMin'] < 231]
+            right_w = [w for w in words if w['xMin'] > 231]
 
             if left_w:
                 lxMin = min(w['xMin'] for w in left_w)
