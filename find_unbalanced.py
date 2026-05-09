@@ -104,7 +104,7 @@ def analyze_bbox(html_file):
         left_last_y = left_valid[-1][0]
         right_last_y = right_valid[-1][0]
         
-        if abs(left_last_y - right_last_y) > 5:
+        if abs(left_last_y - right_last_y) > 10:
             count += 1
             print(f"Page {last_page}: UNBALANCED (Diff: {abs(left_last_y - right_last_y)})")
             print(f"  Left ends at y={left_last_y}: {left_valid[-1][1]}")
