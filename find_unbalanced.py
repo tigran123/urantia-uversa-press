@@ -78,39 +78,47 @@ def analyze_bbox(html_file):
     for ev in events:
         if ev['type'] == 'line':
             current_section_lines.append(ev)
-        elif ev['type'] in ('title', 'eof', 'page_break'):
+        elif ev['type'] in ('title', 'eof'):
             if current_section_lines:
                 sections.append(current_section_lines)
                 current_section_lines = []
 
     count = 0
     for sec_idx, sec_lines in enumerate(sections):
-        # find the last page in this section
-        last_page = sec_lines[-1]['page']
+        # find all pages in this section
+        pages = sorted(list(set(l['page'] for l in sec_lines)))
         
-        # get all lines on the last page of this section
-        last_page_lines = [l for l in sec_lines if l['page'] == last_page]
-        
-        left_col = [(l['y'], l['left']) for l in last_page_lines if l['left']]
-        right_col = [(l['y'], l['right']) for l in last_page_lines if l['right']]
-        
-        # filter footnotes
-        left_valid = [l for l in left_col if not re.match(r'^\d+[a-zA-Z]', l[1])]
-        right_valid = [l for l in right_col if not re.match(r'^\d+[a-zA-Z]', l[1])]
-        
-        if not left_valid or not right_valid:
-            continue
+        for page in pages:
+            # get all lines on this page of this section
+            page_lines = [l for l in sec_lines if l['page'] == page]
+
+            left_col = [(l['y'], l['left']) for l in page_lines if l['left']]
+            right_col = [(l['y'], l['right']) for l in page_lines if l['right']]
+
+            # filter footnotes
+            left_valid = [l for l in left_col if not re.match(r'^\d+[a-zA-Z]', l[1])]
+            right_valid = [l for l in right_col if not re.match(r'^\d+[a-zA-Z]', l[1])]
             
-        left_last_y = left_valid[-1][0]
-        right_last_y = right_valid[-1][0]
-        
-        if abs(left_last_y - right_last_y) > 5:
-            count += 1
-            print(f"Page {last_page}: UNBALANCED (Diff: {abs(left_last_y - right_last_y)})")
-            print(f"  Left ends at y={left_last_y}: {left_valid[-1][1]}")
-            print(f"  Right ends at y={right_last_y}: {right_valid[-1][1]}")
-        elif left_last_y > 625 or right_last_y > 625:
-            print(f"Page {last_page}: WARNING - Text extends into bottom margin (Left: {left_last_y}, Right: {right_last_y})")
+            if not left_valid or not right_valid:
+                continue
+
+            left_last_y = left_valid[-1][0]
+            right_last_y = right_valid[-1][0]
+
+            is_last_page = (page == pages[-1])
+
+            # If it's not the last page of the block, it should be full.
+            # A full column usually ends around y=623.
+            # If it's the last page of the block, it should be balanced.
+
+            diff = abs(left_last_y - right_last_y)
+            if diff > 5:
+                count += 1
+                print(f"Page {page}: UNBALANCED (Diff: {diff})")
+                print(f"  Left ends at y={left_last_y}: {left_valid[-1][1]}")
+                print(f"  Right ends at y={right_last_y}: {right_valid[-1][1]}")
+            elif left_last_y > 625 or right_last_y > 625:
+                print(f"Page {page}: WARNING - Text extends into bottom margin (Left: {left_last_y}, Right: {right_last_y})")
 
     print(f"Total unbalanced columns found: {count}")
 
