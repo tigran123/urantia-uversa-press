@@ -96,10 +96,9 @@ def analyze_bbox(html_file):
             left_col = [(l['y'], l['left']) for l in page_lines if l['left']]
             right_col = [(l['y'], l['right']) for l in page_lines if l['right']]
 
-            # filter footnotes and signatures
-            sig_pattern = r'\[Presented|\[Sponsored|\[Indited|\[Being|\[By|missioned thus|Days on Uversa|Uversa\.\]|Paradise\.\]|of Nebadon\.\]|of Orvonton\.\]|statement depicting'
-            left_valid = [l for l in left_col if not re.match(r'^\d+[a-zA-Z]', l[1]) and not re.search(sig_pattern, l[1])]
-            right_valid = [l for l in right_col if not re.match(r'^\d+[a-zA-Z]', l[1]) and not re.search(sig_pattern, l[1])]
+            # filter footnotes
+            left_valid = [l for l in left_col if not re.match(r'^\d+[a-zA-Z]', l[1])]
+            right_valid = [l for l in right_col if not re.match(r'^\d+[a-zA-Z]', l[1])]
             
             if not left_valid or not right_valid:
                 continue
