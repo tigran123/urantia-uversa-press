@@ -1,4 +1,7 @@
 select-book.tex
+apply_fixes.py
+get_last_words.py
+get_lengths.py
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
