@@ -49,7 +49,8 @@ def analyze_bbox(html_file):
                     gap_crosses_middle = True
 
             crosses_middle = (line_xMin < 220 and line_xMax > 260)
-            is_title = crosses_middle and not gap_crosses_middle and line_xMin > 80 and line_xMax < 390
+            line_width = line_xMax - line_xMin
+            is_title = crosses_middle and not gap_crosses_middle and line_xMin > 80 and line_xMax < 390 and line_width > 100
                 
             if is_title:
                 events.append({'type': 'title'})
@@ -95,9 +96,10 @@ def analyze_bbox(html_file):
             left_col = [(l['y'], l['left']) for l in page_lines if l['left']]
             right_col = [(l['y'], l['right']) for l in page_lines if l['right']]
 
-            # filter footnotes
-            left_valid = [l for l in left_col if not re.match(r'^\d+[a-zA-Z]', l[1])]
-            right_valid = [l for l in right_col if not re.match(r'^\d+[a-zA-Z]', l[1])]
+            # filter footnotes and signatures
+            sig_pattern = r'\[Presented|\[Sponsored|\[Indited|\[Being|\[By|missioned thus|Days on Uversa|Uversa\.\]|Paradise\.\]|of Nebadon\.\]|of Orvonton\.\]|statement depicting'
+            left_valid = [l for l in left_col if not re.match(r'^\d+[a-zA-Z]', l[1]) and not re.search(sig_pattern, l[1])]
+            right_valid = [l for l in right_col if not re.match(r'^\d+[a-zA-Z]', l[1]) and not re.search(sig_pattern, l[1])]
             
             if not left_valid or not right_valid:
                 continue
