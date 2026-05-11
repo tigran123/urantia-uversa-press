@@ -2,6 +2,9 @@ select-book.tex
 apply_fixes.py
 get_last_words.py
 get_lengths.py
+p*_bbox.html
+p*_layout.txt
+urantia-uversa-press.pdf
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
