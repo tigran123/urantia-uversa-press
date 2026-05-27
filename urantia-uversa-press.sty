@@ -148,6 +148,22 @@
    }%
 }
 
+% Combined TOC entry for two consecutive sections joined in the body via
+% \usectiontwo. Renders the first number in the regular number column and
+% prefixes the title with "and N+1.", links to the existing p<paper>_<N+1>
+% label, and leaves utocsecnum at N+1 so the next \utocsection is N+2.
+\newcommand{\utocsectiontwo}[1]{%
+   \stepcounter{utocsecnum}%
+   \edef\utocsecnumfirst{\arabic{utocsecnum}}%
+   \stepcounter{utocsecnum}%
+   {
+    \utocsectionfontsize
+    \makebox[0.08\linewidth][r]{\utocsecnumfirst.\space\space\space}
+    \makebox[0.85\linewidth][l]{and\space\theutocsecnum.\space\space #1\bibdf}
+    \makebox[0.06\linewidth][r]{\bibpr{p\theutocpapernum_\theutocsecnum}}\\
+   }%
+}
+
 \newcommand{\upapertitle}[4]{%
    {
      \pagebreak[3]%
