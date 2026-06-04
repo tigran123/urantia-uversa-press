@@ -3,6 +3,17 @@ import sys
 import re
 from collections import defaultdict
 
+# Body text is set at a glyph height of ~9.96.  Footnotes (~8.97), the
+# publisher's preface (~11.96), the single-column table of contents (~9.27/9.46),
+# and section/part titles (>=12.95) all use distinctly different sizes.  Keeping
+# only body-height words for the column-end comparison therefore drops footnotes
+# (which sit below a rule at the column bottom) and the single-column forematter,
+# both of which used to produce false "unbalanced" reports.
+BODY_H_LO, BODY_H_HI = 9.6, 10.3
+
+def is_body(h):
+    return BODY_H_LO < h < BODY_H_HI
+
 def analyze_bbox(html_file):
     with open(html_file, 'r', encoding='utf-8') as f:
         content = f.read()
@@ -21,12 +32,14 @@ def analyze_bbox(html_file):
                     for word in line.findall('.//word'):
                         if word.text and word.text.strip():
                             yMax = float(word.get('yMax'))
+                            yMin = float(word.get('yMin'))
                             y_key = round(yMax)
                             y_lines[y_key].append({
                                 'text': word.text,
                                 'xMin': float(word.get('xMin')),
                                 'xMax': float(word.get('xMax')),
-                                'yMax': float(word.get('yMax'))
+                                'yMax': yMax,
+                                'h': yMax - yMin
                             })
                             
         valid_y = [y for y in y_lines.keys() if 50 < y < 660]
@@ -60,13 +73,15 @@ def analyze_bbox(html_file):
                 
                 left_text = " ".join(w['text'] for w in sorted(left_w, key=lambda x: x['xMin'])) if left_w else ""
                 right_text = " ".join(w['text'] for w in sorted(right_w, key=lambda x: x['xMin'])) if right_w else ""
-                
+
                 events.append({
                     'type': 'line',
                     'page': i+1,
                     'y': y,
                     'left': left_text,
-                    'right': right_text
+                    'right': right_text,
+                    'left_body': any(is_body(w['h']) for w in left_w),
+                    'right_body': any(is_body(w['h']) for w in right_w)
                 })
         
         events.append({'type': 'page_break', 'page': i+1})
@@ -93,12 +108,12 @@ def analyze_bbox(html_file):
             # get all lines on this page of this section
             page_lines = [l for l in sec_lines if l['page'] == page]
 
-            left_col = [(l['y'], l['left']) for l in page_lines if l['left']]
-            right_col = [(l['y'], l['right']) for l in page_lines if l['right']]
-
-            # filter footnotes
-            left_valid = [l for l in left_col if not re.match(r'^\d+[a-zA-Z]', l[1])]
-            right_valid = [l for l in right_col if not re.match(r'^\d+[a-zA-Z]', l[1])]
+            # Only body-text lines count toward the column-end comparison.  This
+            # excludes footnotes (smaller font, below a rule at the column foot)
+            # and the single-column forematter (preface/contents, different fonts),
+            # both of which otherwise registered as spurious imbalances.
+            left_valid = [(l['y'], l['left']) for l in page_lines if l['left'] and l['left_body']]
+            right_valid = [(l['y'], l['right']) for l in page_lines if l['right'] and l['right_body']]
             
             if not left_valid or not right_valid:
                 continue
