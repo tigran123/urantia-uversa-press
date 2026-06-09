@@ -100,6 +100,15 @@ def analyze_bbox(html_file):
                 current_section_lines = []
 
     count = 0
+    # Real bottom-margin intrusion: a body baseline below the empirical full-page
+    # ceiling.  Across the whole book normal full pages bottom out at y=625 (deepest
+    # of the 621-625 cluster); nothing legitimate reaches 626.  A baseline > 625
+    # therefore means a line was crammed past \textheight -- genuine intrusion.
+    # (This is distinct from an "Overfull \vbox" log warning, which is a benign
+    # \flushbottom/footnote box-accounting effect and does NOT put text in the margin.)
+    MARGIN_Y = 625
+    margin_count = 0
+    margin_reported = set()
     for sec_idx, sec_lines in enumerate(sections):
         # find all pages in this section
         pages = sorted(list(set(l['page'] for l in sec_lines)))
@@ -133,10 +142,17 @@ def analyze_bbox(html_file):
                 print(f"Page {page}: UNBALANCED (Diff: {diff})")
                 print(f"  Left ends at y={left_last_y}: {left_valid[-1][1]}")
                 print(f"  Right ends at y={right_last_y}: {right_valid[-1][1]}")
-            elif left_last_y > 625 or right_last_y > 625:
-                print(f"Page {page}: WARNING - Text extends into bottom margin (Left: {left_last_y}, Right: {right_last_y})")
+
+            # Independent of the balance check: flag real bottom-margin intrusion.
+            if (left_last_y > MARGIN_Y or right_last_y > MARGIN_Y) and page not in margin_reported:
+                margin_reported.add(page)
+                margin_count += 1
+                over = max(left_last_y, right_last_y) - MARGIN_Y
+                print(f"Page {page}: MARGIN INTRUSION - body baseline y={max(left_last_y, right_last_y)} "
+                      f"({over} pt past the y={MARGIN_Y} full-page ceiling)  Left:{left_last_y} Right:{right_last_y}")
 
     print(f"Total unbalanced columns found: {count}")
+    print(f"Total bottom-margin intrusions found: {margin_count}  (body baseline > y={MARGIN_Y})")
 
 if __name__ == "__main__":
     analyze_bbox(sys.argv[1])
